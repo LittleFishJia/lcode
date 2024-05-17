@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	nums := []int{1,2,-2,-1}
+	nums := []int{1, 2, -2, -1}
 	fmt.Println(threeSum(nums))
 }
 
@@ -20,7 +20,7 @@ func threeSum(nums []int) [][]int {
 		}
 		b := a + 1
 		c := n - 1
-		for b != c && b<c {
+		for b != c && b < c {
 			if b > a+1 && nums[b] == nums[b-1] {
 				b++
 				continue

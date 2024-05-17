@@ -4,9 +4,10 @@ import (
 	"fmt"
 )
 
-func main()  {
+func main() {
 	fmt.Println(romanToInt("VVV"))
 }
+
 var valueSymbols = []struct {
 	value  int
 	symbol string

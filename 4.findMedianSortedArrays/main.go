@@ -2,24 +2,24 @@ package main
 
 func main() {
 	nums1 := []int{1, 2}
-	nums2 := []int{3,4}
-findMedianSortedArrays(nums1, nums2)
+	nums2 := []int{3, 4}
+	findMedianSortedArrays(nums1, nums2)
 
 }
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	len1 := len(nums1)
 	len2 := len(nums2)
-	nums := make([]int,0,len1+len2)
+	nums := make([]int, 0, len1+len2)
 	lena := 0
 	if len1 > len2 {
 		lena = len1
-	}else {
+	} else {
 		lena = len2
 	}
 	var offset1, offset2 = 0, 0
-	for i := 0; i < lena;  {
-		for offset1 < len1 || offset2< len2 {
+	for i := 0; i < lena; {
+		for offset1 < len1 || offset2 < len2 {
 			if offset1 == len1 {
 				nums = append(nums, nums2[offset2])
 				offset2++
@@ -37,7 +37,7 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 				nums = append(nums, nums1[offset1])
 				offset1++
 				i++
-			}else {
+			} else {
 				nums = append(nums, nums2[offset2])
 				offset2++
 				i++

@@ -10,13 +10,13 @@ func main() {
 }
 
 func maxArea(height []int) int {
-	a, b := 0,  len(height) -1
+	a, b := 0, len(height)-1
 	maxArea := 0
 	for a < b {
-		maxArea = maxNum(minNum(height[a], height[b]) * (b - a), maxArea)
+		maxArea = maxNum(minNum(height[a], height[b])*(b-a), maxArea)
 		if height[a] <= height[b] {
 			a++
-		}else {
+		} else {
 			b--
 		}
 	}

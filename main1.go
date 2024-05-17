@@ -6,9 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/pion/webrtc/v3"
 	"log"
-	"os"
-	"os/signal"
-
+	"time"
 )
 
 type Ticket struct {
@@ -31,10 +29,11 @@ type Config struct {
 	TurnAuthServers     []TurnAuthServer `json:"TurnAuthServers"`
 }
 
+
 func main() {
 	messageChan := make(chan []byte)
 	go func() {
-		c, _, err := websocket.DefaultDialer.Dial("ws://10.212.14.201:8899/123123/2147594971/TvLsOb7azH9hG01c22D0GQ==/ijYBBJpXL6JO5Ih2axFDnA==", nil)
+		c, _, err := websocket.DefaultDialer.Dial("ws://10.212.14.201:8899/33333/2147594971/TvLsOb7azH9hG01c22D0GQ==/ijYBBJpXL6JO5Ih2axFDnA==", nil)
 		if err != nil {
 			log.Println("dial:", err)
 			return
@@ -42,16 +41,15 @@ func main() {
 		defer c.Close()
 
 		for {
-			defer close(messageChan)
 			_, message, err := c.ReadMessage()
 			if err != nil {
 				log.Println("read:", err)
 				break
 			}
 			messageChan <- message
+			close(messageChan)
 		}
 	}()
-
 	s := &Config{}
 	for message := range messageChan {
 		t := &Ticket{}
@@ -85,36 +83,30 @@ func main() {
 		SDPSemantics:       webrtc.SDPSemanticsUnifiedPlan, // SDP 语义设置为 Unified Plan
 		ICETransportPolicy: webrtc.ICETransportPolicyAll,   // ICE 传输策略
 	}
-
-
-	// 创建PeerConnection
 	peerConnection, err := webrtc.NewPeerConnection(config)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	defer peerConnection.Close()
-
-	// 创建数据通道
+	// 创建一个DataChannel
 	dataChannel, err := peerConnection.CreateDataChannel("data", nil)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	peerConnection.OnICEConnectionStateChange(func(state webrtc.ICEConnectionState) {
 		fmt.Printf("ICE connection state has changed to %s\n", state.String())
 	})
-	// 当数据通道打开时
+	// 当DataChannel打开时
 	dataChannel.OnOpen(func() {
 		fmt.Println("Data channel is open")
-		go func() {
-			for {
-				// 发送消息
-				text := "Hello from Golang WebRTC client"
-				fmt.Printf("Sending: %s\n", text)
-				if err := dataChannel.SendText(text); err != nil {
-					log.Fatal(err)
-				}
+		for {
+			time.Sleep(5 * time.Second)
+			// 发送消息
+			text := "Hello from Golang WebRTC client"
+			fmt.Printf("Sending: %s\n", text)
+			if err := dataChannel.SendText(text); err != nil {
+				panic(err)
 			}
-		}()
+		}
 	})
 	peerConnection.OnDataChannel(func(d *webrtc.DataChannel) {
 		fmt.Printf("New DataChannel %s %d\n", d.Label(), d.ID())
@@ -127,17 +119,11 @@ func main() {
 			fmt.Printf("Message from DataChannel '%s': '%s'\n", d.Label(), string(msg.Data))
 		})
 	})
-	// 当数据通道收到消息时
+	// 当DataChannel收到消息时
 	dataChannel.OnMessage(func(msg webrtc.DataChannelMessage) {
 		fmt.Printf("Received: %s\n", string(msg.Data))
 	})
 
-
-
 	// 阻塞等待命令行输入，以保持程序运行
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt)
-	<-ch
-	fmt.Println("Exiting")
+	select {}
 }
-

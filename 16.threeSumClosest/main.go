@@ -13,13 +13,12 @@ func main() {
 func threeSumClosest(nums []int, target int) int {
 	sort.Ints(nums)
 	var (
-		n = len(nums)
+		n    = len(nums)
 		best = math.MaxInt32
 	)
 
-
 	update := func(cur int) {
-		if abs(cur - target) < abs(best - target) {
+		if abs(cur-target) < abs(best-target) {
 			best = cur
 		}
 	}
@@ -31,7 +30,7 @@ func threeSumClosest(nums []int, target int) int {
 			continue
 		}
 		// 使用双指针枚举 b 和 c
-		j, k := i + 1, n - 1
+		j, k := i+1, n-1
 		for j < k {
 			sum := nums[i] + nums[j] + nums[k]
 			// 如果和为 target 直接返回答案

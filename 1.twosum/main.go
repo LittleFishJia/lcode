@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
- fmt.Println(twoSum([]int{2, 7, 11, 15}, 9))
+	fmt.Println(twoSum([]int{2, 7, 11, 15}, 9))
 }
 
 func twoSum(nums []int, target int) []int {
@@ -17,5 +17,5 @@ func twoSum(nums []int, target int) []int {
 			numsMap[num] = index
 		}
 	}
-	return []int{0,0}
+	return []int{0, 0}
 }

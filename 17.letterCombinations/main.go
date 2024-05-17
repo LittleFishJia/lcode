@@ -3,10 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(	letterCombinations("243"))
-
+	fmt.Println(letterCombinations("243"))
 
 }
+
 var phoneMap map[string]string = map[string]string{
 	"2": "abc",
 	"3": "def",
@@ -35,9 +35,8 @@ func backtrack(digits string, index int, combination string) {
 	} else {
 		newStr := string(digits[index])
 		tmp := phoneMap[newStr]
-		for i:=0 ;i<len(tmp); i++ {
-			backtrack(digits, index+1, combination + string(tmp[i]))
+		for i := 0; i < len(tmp); i++ {
+			backtrack(digits, index+1, combination+string(tmp[i]))
 		}
 	}
 }
-

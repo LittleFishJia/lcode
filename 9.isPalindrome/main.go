@@ -6,19 +6,19 @@ func main() {
 	fmt.Println(isPalindrome(121))
 }
 
-func isPalindrome(n int)bool {
+func isPalindrome(n int) bool {
 	if n < 0 {
 		return false
 	}
 	var arr []int
 	for n > 0 {
-		b :=  n%10
+		b := n % 10
 		arr = append(arr, b)
-		n = n/10
+		n = n / 10
 	}
 	nLen := len(arr)
 
-	for i , j := 0 ,nLen - 1 ; i <= j  ;  {
+	for i, j := 0, nLen-1; i <= j; {
 
 		if arr[i] == arr[j] {
 			i++
@@ -29,6 +29,5 @@ func isPalindrome(n int)bool {
 
 	}
 
-
-	return  true
+	return true
 }

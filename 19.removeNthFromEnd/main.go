@@ -7,7 +7,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func main()  {
+func main() {
 	n := &ListNode{Val: 0}
 	addNode(n, 1)
 	addNode(n, 2)
@@ -15,7 +15,7 @@ func main()  {
 	addNode(n, 4)
 	printNode(n)
 	fmt.Println("test")
-	removeNthFromEnd(n,2)
+	removeNthFromEnd(n, 2)
 
 	printNode(n)
 }
@@ -29,7 +29,7 @@ func addNode(l *ListNode, val int) *ListNode {
 	return l
 }
 
-func printNode(l *ListNode)  {
+func printNode(l *ListNode) {
 	current := l
 	for current != nil {
 		current = current.Next
@@ -40,7 +40,7 @@ func removeNthFromEnd(l *ListNode, n int) *ListNode {
 	count := getLength(l)
 	cur := &ListNode{Val: 0, Next: l}
 	head := cur
-	for i:=0 ;i < count - n ;i++ {
+	for i := 0; i < count-n; i++ {
 		cur = cur.Next
 	}
 	cur.Next = cur.Next.Next
@@ -52,7 +52,7 @@ func getLength(l *ListNode) int {
 	length := 0
 	for cur != nil {
 		length++
-		cur=cur.Next
+		cur = cur.Next
 	}
 	return length
 }

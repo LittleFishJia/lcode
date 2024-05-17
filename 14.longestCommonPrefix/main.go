@@ -2,8 +2,8 @@ package main
 
 import "fmt"
 
-func main()  {
-	strs := []string{"ab","abc","a"}
+func main() {
+	strs := []string{"ab", "abc", "a"}
 	fmt.Println(longestCommonPrefix(strs))
 }
 
